@@ -1,0 +1,96 @@
+version: '3.2'
+ 
+services:
+ mongo:
+  image: mongo
+  environment:
+   MONGO_INITDB_DATABASE: local
+   MONGO_INITDB_ROOT_USERNAME: local
+   MONGO_INITDB_ROOT_PASSWORD: local
+   MONGO_NON_ROOT_USERNAM: local
+   MONGO_NON_ROOT_PASSWORD: local
+  command: ["--bind_ip_all"]
+  ports:
+   - "27017:27017"
+  volumes:
+   - ./mongo-volume:/data/db
+
+ twitter-info:
+  image: bernardoms/twitter-info
+  ports:
+   - "8082:8082"
+  labels:
+    collect_logs_with_filebeat: "true"
+    decode_log_event_to_json_object: "true"
+  environment:
+   - "JAVA_OPTS=-Dnewrelic.config.app_name=v1/twitter-info -Dnewrelic.config.license_key= -Dspring.data.mongodb.uri=mongodb://local:local@mongo:27017/local?authSource=admin"
+  depends_on:
+   - mongo
+
+ twitter-extractor:
+  image: bernardoms/twitter-extractor
+  ports:
+   - "8080:8080"
+  labels:
+    collect_logs_with_filebeat: "true"
+    decode_log_event_to_json_object: "true"
+  environment:
+   - "JAVA_OPTS=-Dnewrelic.config.app_name=v1/twitter-extractor -Dnewrelic.config.license_key= -Dspring.data.mongodb.uri=mongodb://local:local@mongo:27017/local?authSource=admin -Dtwitter.consumer.key= -Dtwitter.consumerSecret.key= -Dtwitter.accessToken.key= -Dtwitter.accessTokenSecret.key="
+  depends_on:
+   - mongo
+
+ twitter-summarize:
+  image: bernardoms/twitter-summarize
+  ports:
+   - "8081:8081"
+  labels:
+    collect_logs_with_filebeat: "true"
+    decode_log_event_to_json_object: "true"
+  environment:
+   - "JAVA_OPTS=-Dnewrelic.config.app_name=v1/twitter-summarize -Dnewrelic.config.license_key= -Dspring.data.mongodb.uri=mongodb://local:local@mongo:27017/local?authSource=admin"
+  depends_on:
+   - mongo
+
+ filebeat:
+   hostname: filebeat
+   build:
+    context: logs/filebeat
+   volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro           # Docker logs
+      - /var/run/docker.sock:/var/run/docker.sock:ro                       # Additional information about containers
+      - ./filebeat/data:/usr/share/filebeat/data:rw                        # Persistence data
+   links:
+     - logstash
+
+ elasticsearch:
+   build:
+     context: logs/elasticsearch/
+   ports:
+     - "9200:9200"
+     - "9300:9300"
+   environment:
+     - cluster.name=logging-cluster
+     - ES_JAVA_OPTS=-Xms256m -Xmx256m
+     - discovery.type=single-node
+
+ logstash:
+   build:
+     context: logs/logstash/
+   ports:
+     - "5000:5000"
+     - "9600:9600"
+   environment:
+     LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+     LOG_LEVEL: error
+   depends_on:
+     - elasticsearch
+ 
+ kibana:
+   build:
+     context: logs/kibana/
+   ports:
+     - "5601:5601"
+   environment:
+     - "LOGGING_QUIET=true"
+   depends_on:
+     - elasticsearch

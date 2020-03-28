@@ -1,0 +1,40 @@
+Mar 28, 2020 10:10:33 -0300 [11638 1] com.newrelic INFO: Writing to New Relic log file: /home/bernardo.monteiro/Meus-Projetos/twitter-apis/twitter-info/logs/newrelic_agent.log
+Mar 28, 2020 10:10:33 -0300 [11638 1] com.newrelic INFO: JRE vendor Ubuntu version 11.0.6
+Mar 28, 2020 10:10:33 -0300 [11638 1] com.newrelic INFO: JVM vendor Ubuntu OpenJDK 64-Bit Server VM version 11.0.6+10-post-Ubuntu-1ubuntu118.04.1
+Mar 28, 2020 10:10:33 -0300 [11638 1] com.newrelic INFO: OS Linux version 4.15.0-76-generic arch amd64
+Mar 28, 2020 10:10:33 -0300 [11638 1] com.newrelic INFO: Agent Host: BRRJOBITANL1515 IP: 192.168.1.17
+Mar 28, 2020 10:10:33 -0300 [11638 1] com.newrelic INFO: New Relic Agent v5.11.0 is initializing...
+Mar 28, 2020 10:10:35 -0300 [11638 1] com.newrelic.agent.RPMServiceManagerImpl INFO: Configured to connect to New Relic at collector.newrelic.com:443
+Mar 28, 2020 10:10:36 -0300 [11638 1] com.newrelic INFO: Setting audit_mode to false
+Mar 28, 2020 10:10:36 -0300 [11638 1] com.newrelic INFO: Setting protocol to "https"
+Mar 28, 2020 10:10:36 -0300 [11638 1] com.newrelic INFO: New Relic Agent v5.11.0 has started
+Mar 28, 2020 10:10:36 -0300 [11638 1] com.newrelic INFO: Agent class loader: com.newrelic.bootstrap.BootstrapAgent$JVMAgentClassLoader@e6ea0c6
+Mar 28, 2020 10:10:36 -0300 [11638 1] com.newrelic INFO: Premain startup complete in 3.177ms
+Mar 28, 2020 10:10:40 -0300 [11638 1] com.newrelic INFO: Server Info: Apache Tomcat/9.0.31
+Mar 28, 2020 10:10:41 -0300 [11638 11] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
+Mar 28, 2020 10:10:41 -0300 [11638 11] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
+Mar 28, 2020 10:10:52 -0300 [11720 1] com.newrelic INFO: Writing to New Relic log file: /home/bernardo.monteiro/Meus-Projetos/twitter-apis/twitter-info/logs/newrelic_agent.log
+Mar 28, 2020 10:10:52 -0300 [11720 1] com.newrelic INFO: JRE vendor Ubuntu version 11.0.6
+Mar 28, 2020 10:10:52 -0300 [11720 1] com.newrelic INFO: JVM vendor Ubuntu OpenJDK 64-Bit Server VM version 11.0.6+10-post-Ubuntu-1ubuntu118.04.1
+Mar 28, 2020 10:10:52 -0300 [11720 1] com.newrelic INFO: OS Linux version 4.15.0-76-generic arch amd64
+Mar 28, 2020 10:10:52 -0300 [11720 1] com.newrelic INFO: Agent Host: BRRJOBITANL1515 IP: 192.168.1.17
+Mar 28, 2020 10:10:52 -0300 [11720 1] com.newrelic INFO: New Relic Agent v5.11.0 is initializing...
+Mar 28, 2020 10:10:54 -0300 [11720 1] com.newrelic.agent.RPMServiceManagerImpl INFO: Configured to connect to New Relic at collector.newrelic.com:443
+Mar 28, 2020 10:10:54 -0300 [11720 1] com.newrelic INFO: Setting audit_mode to false
+Mar 28, 2020 10:10:54 -0300 [11720 1] com.newrelic INFO: Setting protocol to "https"
+Mar 28, 2020 10:10:54 -0300 [11720 1] com.newrelic INFO: New Relic Agent v5.11.0 has started
+Mar 28, 2020 10:10:54 -0300 [11720 1] com.newrelic INFO: Agent class loader: com.newrelic.bootstrap.BootstrapAgent$JVMAgentClassLoader@e6ea0c6
+Mar 28, 2020 10:10:54 -0300 [11720 1] com.newrelic INFO: Premain startup complete in 2.827ms
+Mar 28, 2020 10:10:58 -0300 [11720 1] com.newrelic INFO: Server Info: Apache Tomcat/9.0.31
+Mar 28, 2020 10:11:04 -0300 [11720 34] com.newrelic INFO: Host name is BRRJOBITANL1515, display host BRRJOBITANL1515 for application v1/twitter-info
+Mar 28, 2020 10:11:05 -0300 [11720 34] com.newrelic INFO: Collector redirection to collector-009.newrelic.com:443
+Mar 28, 2020 10:11:06 -0300 [11720 34] com.newrelic INFO: Max payload size is 1.000.000 bytes
+Mar 28, 2020 10:11:06 -0300 [11720 34] com.newrelic INFO: Agent run id: BaZvCjz7n1AKACi9OiaPUJ5ef01cAAIBAAAnIQEAAC3IAgAmj1CcAwAGNS4xMS4wAA9CUlJKT0JJVEFOTDE1MTUAD3YxL3R3aXR0ZXItaW5mbw
+Mar 28, 2020 10:11:06 -0300 [11720 34] com.newrelic INFO: Agent 11720@BRRJOBITANL1515/v1/twitter-info connected to collector.newrelic.com:443
+Mar 28, 2020 10:11:06 -0300 [11720 34] com.newrelic INFO: Reporting to: https://rpm.newrelic.com/accounts/2669882/applications/646926492
+Mar 28, 2020 10:11:06 -0300 [11720 34] com.newrelic INFO: Using default collector host: collector.newrelic.com
+Mar 28, 2020 10:11:06 -0300 [11720 34] com.newrelic INFO: Using default collector host: collector.newrelic.com
+Mar 28, 2020 10:11:07 -0300 [11720 34] com.newrelic INFO: Real user monitoring is enabled for application v1/twitter-info. Auto instrumentation is enabled.
+Mar 28, 2020 11:00:26 -0300 [11720 11] com.newrelic.agent.core.CoreServiceImpl INFO: JVM is shutting down
+Mar 28, 2020 11:00:27 -0300 [11720 60] com.newrelic INFO: Transaction com.newrelic.agent.Transaction@4d385c36 tried to finish but ServiceManager not started
+Mar 28, 2020 11:00:27 -0300 [11720 11] com.newrelic.agent.core.CoreServiceImpl INFO: New Relic Agent has shutdown
