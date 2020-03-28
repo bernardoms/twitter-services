@@ -23,7 +23,7 @@ services:
     collect_logs_with_filebeat: "true"
     decode_log_event_to_json_object: "true"
   environment:
-   - "JAVA_OPTS=-Dnewrelic.config.app_name=v1/twitter-info -Dnewrelic.config.license_key= -Dspring.data.mongodb.uri=mongodb://local:local@mongo:27017/local?authSource=admin"
+   - "JAVA_OPTS=-Dnewrelic.config.app_name=v1/twitter-info -Dnewrelic.config.license_key= -Dspring.data.mongodb.uri=mongodb://local:local@mongo:27017/local?authSource=admin -Dserver.port=8082"
   depends_on:
    - mongo
 
@@ -35,7 +35,7 @@ services:
     collect_logs_with_filebeat: "true"
     decode_log_event_to_json_object: "true"
   environment:
-   - "JAVA_OPTS=-Dnewrelic.config.app_name=v1/twitter-extractor -Dnewrelic.config.license_key= -Dspring.data.mongodb.uri=mongodb://local:local@mongo:27017/local?authSource=admin -Dtwitter.consumer.key= -Dtwitter.consumerSecret.key= -Dtwitter.accessToken.key= -Dtwitter.accessTokenSecret.key="
+   - "JAVA_OPTS=-Dnewrelic.config.app_name=v1/twitter-extractor -Dnewrelic.config.license_key= -Dspring.data.mongodb.uri=mongodb://local:local@mongo:27017/local?authSource=admin -Dtwitter.consumer.key= -Dtwitter.consumerSecret.key= -Dtwitter.accessToken.key= -Dtwitter.accessTokenSecret.key= -Dserver.port=8080"
   depends_on:
    - mongo
 
@@ -47,7 +47,7 @@ services:
     collect_logs_with_filebeat: "true"
     decode_log_event_to_json_object: "true"
   environment:
-   - "JAVA_OPTS=-Dnewrelic.config.app_name=v1/twitter-summarize -Dnewrelic.config.license_key= -Dspring.data.mongodb.uri=mongodb://local:local@mongo:27017/local?authSource=admin"
+   - "JAVA_OPTS=-Dnewrelic.config.app_name=v1/twitter-summarize -Dnewrelic.config.license_key= -Dspring.data.mongodb.uri=mongodb://local:local@mongo:27017/local?authSource=admin -Dserver.port=8081"
   depends_on:
    - mongo
 
