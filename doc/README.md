@@ -25,3 +25,13 @@ of a filter showing only logs with level info.
 ![LogWithLevelInfo](logs_with_level_error.png)
 
 In this picture the filter is with log level error.
+
+![LogArchitecture](log_architecture.png)
+
+Log architecture used on this project. 
+
+Filebeat gets the logs from the docker(only the containers with a specific label) 
+and send to logstash. Logstash will filter and transform then and send to elasticsearch. Once logs are on elasticsearch its possible
+to filter then using Kibana.
+
+
