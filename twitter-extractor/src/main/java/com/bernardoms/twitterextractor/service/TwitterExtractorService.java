@@ -5,6 +5,7 @@ import com.bernardoms.twitterextractor.mapper.Mapper;
 import com.bernardoms.twitterextractor.model.TweetModel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
 import org.springframework.social.twitter.api.SearchParameters;
 import org.springframework.social.twitter.api.Tweet;
 import org.springframework.social.twitter.api.Twitter;
@@ -20,6 +21,7 @@ public class TwitterExtractorService {
     private final Twitter twitter;
     private final TwitterRepository twitterRepository;
     private final Mapper<TweetModel, Tweet> mapper;
+    private final QueueMessagingTemplate queueMessagingTemplate;
 
     public void extractAndSaveAllTweetsByHashTag(String hashTag) {
 
@@ -34,7 +36,11 @@ public class TwitterExtractorService {
                         .stream().anyMatch(hashTagEntity -> hashTag.equalsIgnoreCase(hashTagEntity.getText())))
                 .collect(Collectors.toList());
         log.info("Saving " + tweets.size() + "tweets by hash tag " + hashTag );
-        save(tweets);
+        if(tweets.size() > 0) {
+            save(tweets);
+            log.info("sending new tweets to queue");
+            queueMessagingTemplate.convertAndSend("summarize", "new tweets saved! time to summarize!");
+        }
     }
 
     private void save(List<Tweet> tweets) {

@@ -1,16 +1,14 @@
 package com.bernardoms.twittersummarize.service;
 
-import com.bernardoms.twittersummarize.config.Config;
 import com.bernardoms.twittersummarize.model.Tweet;
 import com.bernardoms.twittersummarize.model.TwitterSummarize;
 import com.bernardoms.twittersummarize.repository.TwitterRepository;
 import com.bernardoms.twittersummarize.repository.TwitterSummarizeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.cloud.aws.messaging.listener.annotation.SqsListener;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -18,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.stream.Collectors.*;
+import static org.springframework.cloud.aws.messaging.listener.SqsMessageDeletionPolicy.ON_SUCCESS;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +25,12 @@ public class TwitterSummarizeService {
     private final TwitterSummarizeRepository twitterSummarizeRepository;
     private final TwitterRepository twitterRepository;
 
-    @Scheduled(cron = "${summarizing.run.time.cron}")
+    @SqsListener(value = "summarize", deletionPolicy = ON_SUCCESS)
+    private void receiveFromQueue() {
+        log.info("received new tweets from sqs, summarizing!");
+        this.group();
+    }
+
     public void group() {
         List<Tweet> tweets = new ArrayList<>(twitterRepository.findAll());
         groupByFollowers(tweets);

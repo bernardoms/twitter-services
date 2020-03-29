@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
 import org.springframework.social.twitter.api.*;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -26,6 +27,9 @@ public class TwitterExtractorControllerTest {
 
     @MockBean
     private Twitter twitter;
+
+    @MockBean
+    private QueueMessagingTemplate queueMessagingTemplate;
 
     private static String URL_PATH = "/v1/tweets";
 

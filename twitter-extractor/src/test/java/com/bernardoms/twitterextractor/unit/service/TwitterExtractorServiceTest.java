@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
 import org.springframework.social.twitter.api.*;
 
 import java.time.LocalDateTime;
@@ -30,6 +31,8 @@ public class TwitterExtractorServiceTest {
     private Twitter twitter;
     @Mock
     private Mapper<TweetModel, Tweet> mapper;
+    @Mock
+    private QueueMessagingTemplate queueMessagingTemplate;
 
     @Test
     public void test_extract_and_save_a_hashtag() {
@@ -48,6 +51,7 @@ public class TwitterExtractorServiceTest {
         twitterExtractorService.extractAndSaveAllTweetsByHashTag("test");
 
         verify(twitterRepository, times(1)).saveAll(Collections.singletonList(tweetModel));
+        verify(queueMessagingTemplate, times(1)).convertAndSend(anyString(), anyString());
     }
 
     @Test
@@ -63,6 +67,7 @@ public class TwitterExtractorServiceTest {
 
         twitterExtractorService.extractAndSaveAllTweetsByHashTag("test");
 
-        verify(twitterRepository, times(1)).saveAll(Collections.emptyList());
+        verify(twitterRepository, times(0)).saveAll(Collections.emptyList());
+        verify(queueMessagingTemplate, times(0)).convertAndSend(anyString(), anyString());
     }
 }

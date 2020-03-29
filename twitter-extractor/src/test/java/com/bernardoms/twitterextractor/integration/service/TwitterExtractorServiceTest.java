@@ -6,6 +6,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
 import org.springframework.social.twitter.api.*;
 
 import java.util.Collections;
@@ -13,7 +14,7 @@ import java.util.Date;
 import java.util.stream.IntStream;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 @SpringBootTest
@@ -24,6 +25,9 @@ public class TwitterExtractorServiceTest {
 
     @MockBean
     private Twitter twitter;
+
+    @MockBean
+    private QueueMessagingTemplate messagingTemplate;
 
     @Test
     public void test_extract_and_save_a_hashtag() {
@@ -39,5 +43,7 @@ public class TwitterExtractorServiceTest {
         when(twitter.searchOperations().search(any(SearchParameters.class))).thenReturn(searchResults);
 
         twitterExtractorService.extractAndSaveAllTweetsByHashTag("test");
+
+        verify(messagingTemplate, times(1)).convertAndSend(anyString(), anyString());
     }
 }

@@ -15,6 +15,19 @@ services:
   volumes:
    - ./mongo-volume:/data/db
 
+ localstack:
+  image: localstack/localstack:0.10.7
+  container_name: localstack
+  ports:
+   - 4575:4575
+   - 4576:4576
+   - 8088:8080
+  volumes:
+   - "./aws:/docker-entrypoint-initaws.d"
+  environment:
+   - SERVICES=sqs
+   - HOSTNAME_EXTERNAL=localstack
+
  twitter-info:
   image: bernardoms/twitter-info
   ports:
@@ -35,9 +48,10 @@ services:
     collect_logs_with_filebeat: "true"
     decode_log_event_to_json_object: "true"
   environment:
-   - "JAVA_OPTS=-Dnewrelic.config.app_name=v1/twitter-extractor -Dnewrelic.config.license_key= -Dspring.data.mongodb.uri=mongodb://local:local@mongo:27017/local?authSource=admin -Dtwitter.consumer.key= -Dtwitter.consumerSecret.key= -Dtwitter.accessToken.key= -Dtwitter.accessTokenSecret.key= -Dserver.port=8080"
+   - "JAVA_OPTS=-Dnewrelic.config.app_name=v1/twitter-extractor -Dnewrelic.config.license_key= -Dspring.data.mongodb.uri=mongodb://local:local@mongo:27017/local?authSource=admin -Dtwitter.consumer.key= -Dtwitter.consumerSecret.key= -Dtwitter.accessToken.key= -Dtwitter.accessTokenSecret.key= -Dserver.port=8080 -Dsqs.endpoint=http://localstack:4576"
   depends_on:
    - mongo
+   - localstack
 
  twitter-summarize:
   image: bernardoms/twitter-summarize
@@ -47,9 +61,10 @@ services:
     collect_logs_with_filebeat: "true"
     decode_log_event_to_json_object: "true"
   environment:
-   - "JAVA_OPTS=-Dnewrelic.config.app_name=v1/twitter-summarize -Dnewrelic.config.license_key= -Dspring.data.mongodb.uri=mongodb://local:local@mongo:27017/local?authSource=admin -Dserver.port=8081"
+   - "JAVA_OPTS=-Dnewrelic.config.app_name=v1/twitter-summarize -Dnewrelic.config.license_key= -Dspring.data.mongodb.uri=mongodb://local:local@mongo:27017/local?authSource=admin -Dserver.port=8081 -Dsqs.endpoint=http://localstack:4576"
   depends_on:
    - mongo
+   - localstack
 
  filebeat:
    hostname: filebeat
