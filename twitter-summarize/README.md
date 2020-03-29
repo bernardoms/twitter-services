@@ -1,4 +1,4 @@
-# twitter-summaryze
+# twitter-summarize
 
 API used to get all tweets and them summarize from some criterias.
 The criterias used right are:
@@ -18,4 +18,4 @@ Use mvn clean package tu build the project and then java -jar inside the target 
 it's possible to see the endpoints and example after run the project and acess that endpoint:
 http://localhost:8081/swagger-ui.html
 
-This apis runs a service to summary all new hashtags from hour to hour, however it's possible to force a summaryzing using an endpoint described in the swagger endpoint.
+This apis runs a service to summary all new hashtags when receives a new message from sqs. however it's possible to force a summaryzing using an endpoint described in the swagger endpoint.
